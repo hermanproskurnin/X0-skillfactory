@@ -1,0 +1,71 @@
+#Приветствие
+print("     Добро пожаловать в игру")
+print("       Всего одно правило")
+print("       ввидите в консоль:")
+print("номер строки и столбца через пробел")
+# Создание пустого поля
+board = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
+
+# Функция для вывода игрового поля
+def draw_board(board):
+    print("  1 2 3")
+    for i in range(3):
+        row = str(i + 1) + " "
+        for j in range(3):
+            row += board[i][j] + " "
+        print(row)
+
+# Функция для проверки победы
+def check_win(board, player):
+    for i in range(3):
+        if board[i][0] == board[i][1] == board[i][2] == player:
+            return True
+        if board[0][i] == board[1][i] == board[2][i] == player:
+            return True
+    if board[0][0] == board[1][1] == board[2][2] == player:
+        return True
+    if board[0][2] == board[1][1] == board[2][0] == player:
+        return True
+    return False
+
+# Функция для проверки ничьей
+def check_draw(board):
+    for row in board:
+        if " " in row:
+            return False
+    return True
+
+# Цикл игры
+current_player = "X"
+while True:
+    # Вывод игрового поля
+    draw_board(board)
+
+    # Ход игрока
+    while True:
+            move = input("Ход игрока " + current_player + ": ")
+            row, col = move.split(" ")
+            row = int(row) - 1
+            col = int(col) - 1
+            if row < 0 or row > 2 or col < 0 or col > 2:
+                print("Координаты должны быть в диапазоне от 1 до 3!")
+            elif board[row][col] != " ":
+                print("Ячейка занята!")
+            else:
+                board[row][col] = current_player
+                break
+
+    # Проверка победы
+    if check_win(board, current_player):
+        draw_board(board)
+        print("Игрок", current_player, "победил!")
+        break
+
+    # Проверка на ничью
+    if check_draw(board):
+        draw_board(board)
+        print("Ничья!")
+        break
+
+    # Смена игрока
+    current_player = "O" if current_player == "X" else "X"
