@@ -1,12 +1,12 @@
-#Приветствие
-print("     Добро пожаловать в игру")
-print("       Всего одно правило")
-print("       ввидите в консоль:")
-print("номер строки и столбца через пробел")
-# Создание пустого поля
+# Welcome
+print("     Welcome to the game")
+print("       Only one rule")
+print("       enter in the console:")
+print("row number and column number separated by space")
+# Creating an empty board
 board = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
 
-# Функция для вывода игрового поля
+# Function to display the game board
 def draw_board(board):
     print("  1 2 3")
     for i in range(3):
@@ -15,7 +15,7 @@ def draw_board(board):
             row += board[i][j] + " "
         print(row)
 
-# Функция для проверки победы
+# Function to check for a win
 def check_win(board, player):
     for i in range(3):
         if board[i][0] == board[i][1] == board[i][2] == player:
@@ -28,44 +28,44 @@ def check_win(board, player):
         return True
     return False
 
-# Функция для проверки ничьей
+# Function to check for a draw
 def check_draw(board):
     for row in board:
         if " " in row:
             return False
     return True
 
-# Цикл игры
+# Game loop
 current_player = "X"
 while True:
-    # Вывод игрового поля
+    # Displaying the game board
     draw_board(board)
 
-    # Ход игрока
+    # Player's move
     while True:
-            move = input("Ход игрока " + current_player + ": ")
-            row, col = move.split(" ")
-            row = int(row) - 1
-            col = int(col) - 1
-            if row < 0 or row > 2 or col < 0 or col > 2:
-                print("Координаты должны быть в диапазоне от 1 до 3!")
-            elif board[row][col] != " ":
-                print("Ячейка занята!")
-            else:
-                board[row][col] = current_player
-                break
+        move = input("Player " + current_player + "'s move: ")
+        row, col = move.split(" ")
+        row = int(row) - 1
+        col = int(col) - 1
+        if row < 0 or row > 2 or col < 0 or col > 2:
+            print("Coordinates must be in the range from 1 to 3!")
+        elif board[row][col] != " ":
+            print("Cell is occupied!")
+        else:
+            board[row][col] = current_player
+            break
 
-    # Проверка победы
+    # Check for a win
     if check_win(board, current_player):
         draw_board(board)
-        print("Игрок", current_player, "победил!")
+        print("Player", current_player, "wins!")
         break
 
-    # Проверка на ничью
+    # Check for a draw
     if check_draw(board):
         draw_board(board)
-        print("Ничья!")
+        print("Draw!")
         break
 
-    # Смена игрока
+    # Switch player
     current_player = "O" if current_player == "X" else "X"
